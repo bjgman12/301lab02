@@ -1,2 +1,33 @@
-img { width: 200px;
-height:200px;}
+
+@import url('layout.css');
+@import url('module.css');
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
+*{
+  font-family: "Poor Story", cursive;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+section {
+  border: 1px solid black;
+  width: 30em;
+  height:25em;
+  text-align:center;
+}
+
+select {
+  height: 35px;
+  background-color:black;
+  color:white;
+}
+
+img { 
+  width: 200px;
+  height:200px;
+}
+
+p {
+  width: 100px;
+}
