@@ -1,9 +1,10 @@
 'use strict';
 
 // use .clone()
-let $phototemplate = $('#photo-template');
+let $phototemplate = $('.photo-template');
 let $container = $('.container');
 let $menu = $('#menu');
+
 
 $.ajax('../data/page-1.json').then(pageOne => {
   pageOne.forEach(function (image) {
@@ -15,23 +16,32 @@ $.ajax('../data/page-1.json').then(pageOne => {
     $newPhoto.removeClass('photo-template');
     $newPhoto.attr('class', image.keyword);
 
+  });
+  $phototemplate.remove();
 
-    let $newOption = $('<option></option>').text(image.keyword);
-    // console.log(image.keyword);
-  
+  let keyword = [];
+  //create array of key words
+  for (let i = 1; i < $container.children().length; i++) {
+    keyword.push($container.children()[i].classList.value);
+  }
+  //filter array from dupes
+  let uniKeys = keyword.filter((item, i, ar) => ar.indexOf(item) === i);
+
+  console.log(uniKeys);
+  // Add keywords to menu
+  uniKeys.forEach(function (key) {
+    let $newOption = $('<option></option>').text(key);
 
     $menu.append($newOption);
 
-
   });
 
+});
+$menu.on('change', function (event) {
+  let $show = `.${event.target.value}`;
+  $('section').show();
+  $('section').not($show).toggle('hide');
 
-
-  $menu.on('change', function (event) {
-    let $show = event.target.value;
-    console.log($show);
-    $('section').not(`.${$show}`).toggle('hide');
-  });
 });
 
 
