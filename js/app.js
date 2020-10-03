@@ -37,10 +37,15 @@ $.ajax('../data/page-1.json').then(pageOne => {
   });
 
 });
+
 $menu.on('change', function (event) {
   let $show = `.${event.target.value}`;
+  console.log($show);
   $('section').show();
+  if ($show !== '.default'){
   $('section').not($show).toggle('hide');
+  }
+ 
 
 });
 
