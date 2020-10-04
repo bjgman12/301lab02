@@ -9,6 +9,8 @@ let keyword = [];
 let sortedPageOne = [];
 let sortedPageTwo = [];
 let sortedHorns = [];
+let defaultPage = true;
+let secondPage = true;
 function Photo(src, title, description, key, horns) {
   this.src = src;
   this.title = title;
@@ -55,7 +57,7 @@ $.ajax('../data/page-1.json').then(pageOne => {
 $.ajax('../data/page-2.json').then(pageTwo => {
   pageTwo.forEach(image => {
     let newPhoto = new Photo(image.image_url, image.title, image.description, image.keyword, image.horns);
-    sortedPageTwo.push(newPhoto)
+    sortedPageTwo.push(newPhoto);
     let $phototemplate = $('#photo-template').html();
     let rendered = Mustache.render($phototemplate, newPhoto);
     $pageTwo.append(rendered);
@@ -106,6 +108,7 @@ function pages() {
     $('.pageTwoOpt').hide();
     $pageOne.show();
     $pageTwo.hide();
+    defaultPage = true;
   });
 
   $showTwo.on('click', function (event) {
@@ -114,6 +117,7 @@ function pages() {
     $('.pageTwoOpt').show();
     $pageTwo.show();
     $pageOne.hide();
+    defaultPage = false;
   });
 }
 
@@ -121,16 +125,26 @@ function pages() {
 // sorting 
 
 $sort.on('click', function (event) {
-  sortedHorns.sort((a, b) => a.horns - b.horns);
-  $pageOne.empty();
-  sortedHorns.forEach(item => {
-    let $phototemplate = $('#photo-template').html();
-    let rendered = Mustache.render($phototemplate, item);
-    $pageOne.append(rendered);
+  sortedPageOne.sort((a, b) => a.horns - b.horns);
+  sortedPageTwo.sort((a, b) => a.horns - b.horns);
+  if (defaultPage) {
+    $pageOne.empty();
+    sortedPageOne.forEach(item => {
+      let $phototemplate = $('#photo-template').html();
+      let rendered = Mustache.render($phototemplate, item);
+      $pageOne.append(rendered);
+    });
+  } else if (secondPage) {
+    $pageTwo.empty();
+    sortedPageTwo.forEach(item => {
+      let $phototemplate = $('#photo-template').html();
+      let rendered = Mustache.render($phototemplate, item);
+      $pageTwo.append(rendered);
+    });
+  }
 
-  });
 
-})
+});
 
 
 
