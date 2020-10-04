@@ -1,5 +1,11 @@
+div{
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  justify-content:space-evenly;
+}
 section {
-  float:left;
+
   overflow: scroll;
 }
 
@@ -26,4 +32,8 @@ select {
 footer {
   position: fixed;
   bottom: 0;
+}
+
+main {
+  text-align:center;
 }
